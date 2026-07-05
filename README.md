@@ -1,6 +1,6 @@
 # Affiliate Product Hub
 
-A premium, dynamic link-in-bio store for your affiliate products — built with
+A premium,  dynamic link-in-bio store for your affiliate products — built with
 Next.js (App Router), a real database, Google-authenticated admin panel, and
 permanent image storage. Deploys free on Vercel.
 
