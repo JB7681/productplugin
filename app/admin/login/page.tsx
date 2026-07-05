@@ -1,10 +1,9 @@
 "use client";
 import { signIn, useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect, Suspense } from "react";
 
-export default function AdminLoginPage() {
+function LoginContent() {
   const { data: session, status } = useSession();
   const params = useSearchParams();
   const denied = params.get("denied");
@@ -38,5 +37,13 @@ export default function AdminLoginPage() {
         </button>
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
   );
 }
