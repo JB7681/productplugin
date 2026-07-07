@@ -1,0 +1,54 @@
+// ==========================================================
+// DATABASE SCHEMA
+// This is the single source of truth for your product data.
+// You never need to touch this file to add/edit products —
+// use the /admin dashboard instead. This file only defines
+// the *shape* of a product.
+// ==========================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Works with any Postgres provider. Recommended free options:
+  // - Vercel Postgres (Neon) - vercel.com/storage/postgres
+  // - Supabase - supabase.com
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  name           String
+  description    String // short description shown on card
+  fullDescription String? // optional longer description shown on product page
+  category       String
+  image          String // final image URL (uploaded OR auto-fetched)
+  affiliateLink  String
+  brand          String // brand / store name
+  price          String
+  originalPrice  String?
+  rating         Float?
+  featured       Boolean  @default(false)
+  latest         Boolean  @default(true)
+  tags           String[] @default([])
+  platform       String // Amazon / Flipkart / Meesho / etc.
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// Singleton table (always exactly one row) for site-wide settings:
+// profile photo, name, bio, social links, disclosure text.
+model Profile {
+  id          Int      @id @default(1)
+  name        String   @default("Your Name")
+  tagline     String   @default("Honest reviews. Products I actually use.")
+  bio         String   @default("I test and review products across tech, beauty, home & fashion. Every link below is something I've personally used or vetted.")
+  avatarUrl   String   @default("")
+  instagram   String   @default("")
+  youtube     String   @default("")
+  tiktokOrShorts String @default("")
+  disclosure  String   @default("Some links on this page are affiliate links. If you buy through them, I may earn a small commission at no extra cost to you. I only recommend products I genuinely use or trust.")
+  updatedAt   DateTime @updatedAt
+}
