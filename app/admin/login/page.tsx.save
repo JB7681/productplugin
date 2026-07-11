@@ -1,0 +1,23 @@
+"use client";
+import { signIn, useSession } from next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+export default function AdminLoginPage() {
+  const { data: session, status } = useSession();
+  const params = useSearchParams();
+  const denied = params.get("denied");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated" && (session?.user as any)?.isAdmin) {
+      router.replace("/admin");
+    }
+  }, [status, session, router]);
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-neutral-50 dark:bg-ink-950 px-4">
+      <div className="w-full max-w-sm rounded-xl2 bg-white dark:bg-ink-900 p-8 shadow-card text-center">
+        <h1 className="text-xl font-bold mb-1">Admin Login</h1>
+       
