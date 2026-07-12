@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/requireAdmin";
 
+export const dynamic = "force-dynamic";
+
 async function getOrCreateProfile() {
   let profile = await prisma.profile.findUnique({ where: { id: 1 } });
   if (!profile) {
